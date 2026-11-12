@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FacturAPP - Iniciar sesión</title>
+
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+
+    <link rel="icon"
+          type="image/png"
+          href="{{ url_for('static', filename='img/ver.png') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="row justify-content-center align-items-center"
+         style="min-height: 100vh;">
+
+        <div class="col-md-5">
+
+            <div class="card shadow">
+
+                <div class="card-body p-5 text-center">
+
+                    
+                    <img src="{{ url_for('static', filename='img/ver.png') }}"
+                         alt="Logo FacturAPP"
+                         width="150"
+                         height="90"
+                         style="object-fit: contain; margin-bottom: 20px;">
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+
+                        {% if messages %}
+
+                            {% for category, message in messages %}
+
+                                <div class="alert alert-{{ category }}">
+                                    {{ message }}
+                                </div>
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                    {% endwith %}
+
+
+                    <form method="POST">
+
+                        <div class="form-group text-left">
+
+                            <label for="email">
+                                Correo electrónico
+                            </label>
+
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                placeholder="Ingrese su correo"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group text-left">
+
+                            <label for="password">
+                                Contraseña
+                            </label>
+
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                name="password"
+                                placeholder="Ingrese su contraseña"
+                                required
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-block">
+
+                            Iniciar sesión
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

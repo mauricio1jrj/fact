@@ -1,0 +1,133 @@
+{% extends 'layout.html' %}
+
+{% block fact %}
+<div class="container mt-4">
+    <h3>Detalles de Facturas</h3>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="alert alert-info">
+                Total detalles:
+                {{ meta.get('total', detalles|length) }}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="alert alert-success">
+                Total página: $ {{ total }}
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ url_for(
+        'detalles_facturas.crear_detalle'
+    ) }}" class="btn btn-primary mb-3">
+        Nuevo Detalle
+    </a>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Factura</th>
+                    <th>Cliente</th>
+                    <th>Vendedor</th>
+                    <th>Fecha</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for detalle in detalles %}
+                <tr>
+                    <td>{{ detalle.id }}</td>
+                    <td>{{ detalle.numero_factura }}</td>
+                    <td>{{ detalle.cliente_nombre }}</td>
+                    <td>{{ detalle.vendedor_nombre }}</td>
+                    <td>{{ detalle.fecha_emision }}</td>
+                    <td>{{ detalle.producto_nombre }}</td>
+                    <td>{{ detalle.cantidad }}</td>
+                    <td>$ {{ detalle.precio_unitario }}</td>
+                    <td>
+                        <strong>
+                            $ {{ detalle.total }}
+                        </strong>
+                    </td>
+                    <td>
+                        {% if session.get('rol') == 'admin' %}
+                        <a href="{{ url_for(
+                            'detalles_facturas.editar_detalle',
+                            id=detalle.id
+                        ) }}"
+                           class="btn btn-warning btn-sm">
+                            Editar
+                        </a>
+
+                        <form method="POST"
+                              action="{{ url_for(
+                                  'detalles_facturas.eliminar_detalle',
+                                  id=detalle.id
+                              ) }}"
+                              style="display:inline;">
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm">
+                                Eliminar
+                            </button>
+                        </form>
+                        {% else %}
+                        <span class="text-muted">
+                            Solo lectura
+                        </span>
+                        {% endif %}
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="10"
+                        class="text-center">
+                        No hay detalles registrados.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-center
+                align-items-center mt-4 mb-4">
+
+        {% if meta.get('has_prev') %}
+        <a href="{{ url_for(
+            'detalles_facturas.index',
+            page=meta.get('page') - 1,
+            per_page=meta.get('per_page', 5)
+        ) }}"
+           class="btn btn-primary mr-3">
+            Anterior
+        </a>
+        {% endif %}
+
+        <span>
+            Página {{ meta.get('page', 1) }}
+            de {{ meta.get('total_pages', 1) }}
+        </span>
+
+        {% if meta.get('has_next') %}
+        <a href="{{ url_for(
+            'detalles_facturas.index',
+            page=meta.get('page') + 1,
+            per_page=meta.get('per_page', 5)
+        ) }}"
+           class="btn btn-primary ml-3">
+            Siguiente
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock fact %}

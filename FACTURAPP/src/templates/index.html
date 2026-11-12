@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+{% block fact %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<div class="banner-imagenes">
+    <div class="imagenes">
+        <img src="{{ url_for('static', filename='img/gestion1.png') }}" alt="gestion 1">
+        <img src="{{ url_for('static', filename='img/gestion2.png') }}" alt="gestion 2">
+        <img src="{{ url_for('static', filename='img/gestion3.png') }}" alt="gestion 3">
+        
+    </div>
+</div>
+</div>
+
+<hr>
+
+<h2>Gestiones del sistema</h2>
+
+<ul class="modulos">
+
+    <li class="modulo">
+        <a href="{{ url_for('clientes.index') }}">
+            Clientes
+        </a>
+
+        <p>
+            Gestión de clientes
+        </p>
+    </li>
+
+    <li class="modulo">
+        <a href="{{ url_for('productos.index') }}">
+            Productos
+        </a>
+        <p>
+            Gestión de productos
+        </p>
+    </li>
+
+    <li class="modulo">
+        <a href="{{ url_for('categorias.index') }}">
+            Categorías
+        </a>
+        <p>
+            Gestión de categorías
+        </p>
+    </li>
+
+    <li class="modulo">
+        <a href="{{ url_for('vendedores.index') }}">
+            Vendedores
+        </a>
+        <p>
+            Gestión de vendedores
+        </p>
+    </li>
+
+    <li class="modulo">
+        <a href="{{ url_for('facturas.index') }}">
+            Facturas
+        </a>
+        <p>
+            Gestión de facturas
+        </p>
+    </li>
+
+    <li class="modulo">
+        <a href="{{ url_for('detalles_facturas.index') }}">
+            Detalles de Facturas
+        </a>
+        <p>
+            Gestión de detalles
+        </p>
+    </li>
+
+</ul>
+
+{% endblock %}

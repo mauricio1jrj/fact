@@ -1,0 +1,1 @@
+#comonado para iniciar flask --app src.app:app run --debug

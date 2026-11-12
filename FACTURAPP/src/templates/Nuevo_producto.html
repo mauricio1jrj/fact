@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+
+{% block fact %}
+
+<h3>Añadir nuevo Producto</h3>
+
+<form method="POST">
+
+    <div class="form-group col-md-6">
+
+        <label>Nombre del producto</label>
+        <input 
+            type="text" 
+            class="form-control" 
+            name="nombre"
+            placeholder="Nombre del producto">
+
+
+        <label>Código</label>
+        <input 
+            type="text" 
+            class="form-control"
+            name="codigo"
+            placeholder="Código del producto">
+
+
+        <label>Unidad de medida</label>
+        <input 
+            type="text"
+            class="form-control"
+            name="unidad_medida"
+            placeholder="Ejemplo: 1L, Kg, Unidad">
+
+
+        <label>Stock</label>
+        <input 
+            type="number"
+            class="form-control"
+            name="stock"
+            placeholder="Cantidad disponible">
+
+
+        <label>Descripción</label>
+        <textarea 
+            class="form-control"
+            name="descripcion"
+            rows="3"></textarea>
+
+
+        <label>Categoría</label>
+        <select class="form-control" name="categoria_id">
+
+            <option value="1">Electrodomésticos</option>
+            <option value="2">Ferretería y vehículos</option>
+            <option value="3">Juguetes y juegos</option>
+
+        </select>
+
+
+        <label>Precio</label>
+        <input 
+            type="number"
+            class="form-control"
+            name="precio"
+            placeholder="Precio">
+
+
+        <br>
+
+        <button type="submit" class="btn btn-primary">
+            Guardar
+        </button>
+
+    </div>
+
+</form>
+
+{% endblock fact %}

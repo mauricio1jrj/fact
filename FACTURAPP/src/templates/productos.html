@@ -1,0 +1,275 @@
+{% extends 'layout.html' %}
+
+{% block fact %}
+
+<style>
+
+    .tienda {
+        padding: 25px 0 40px;
+    }
+
+    
+    .tienda-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        gap: 20px;
+    }
+
+
+</style>
+
+
+<div class="container tienda">
+
+    <!-- ENCABEZADO -->
+    <div class="tienda-header">
+
+        <div>
+            <h1 class="tienda-titulo">
+                Productos
+            </h1>
+
+            <p class="tienda-subtitulo">
+                Explora nuestros productos disponibles
+                · {{ meta.get('total', productos|length) }} productos
+            </p>
+        </div>
+
+
+        <!-- BUSCADOR VISUAL -->
+        <div class="buscador-productos">
+
+            <input
+                type="text"
+                id="buscador"
+                placeholder="Buscar productos..."
+            >
+
+            <button type="button">
+                🔍
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- CATEGORÍAS VISUALES -->
+    <div class="categorias-scroll">
+
+        <button class="categoria-btn categoria-activa">
+            Todos
+        </button>
+
+        <button class="categoria-btn">
+            Más vendidos
+        </button>
+
+        <button class="categoria-btn">
+            Nuevos
+        </button>
+
+        <button class="categoria-btn">
+            Ofertas
+        </button>
+
+    </div>
+
+
+    <!-- BANNER -->
+    <div class="banner-productos">
+
+        <h2>
+            Productos destacados
+        </h2>
+
+        <p>
+            Consulta rápidamente la información de tus productos.
+        </p>
+
+    </div>
+
+
+    <!-- PRODUCTOS -->
+    <div class="productos-grid" id="productosGrid">
+
+        {% for producto in productos %}
+
+        <div class="producto-card"
+             data-nombre="{{ producto.nombre|lower }}"
+             data-codigo="{{ producto.codigo|lower }}">
+
+            <!-- IMAGEN -->
+            <div class="producto-imagen">
+                📦
+            </div>
+
+
+            <!-- INFORMACIÓN -->
+            <div class="producto-info">
+
+                <div class="producto-codigo">
+                    Código: {{ producto.codigo }}
+                </div>
+
+
+                <div class="producto-nombre">
+                    {{ producto.nombre }}
+                </div>
+
+
+                <div class="producto-descripcion">
+
+                    {% if producto.descripcion %}
+
+                        {{ producto.descripcion }}
+
+                    {% else %}
+
+                        Sin descripción disponible.
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="producto-precio">
+
+                    ${{ "{:,.0f}".format(producto.precio|float) }}
+
+                </div>
+
+
+                <div class="producto-datos">
+
+                    <span class="producto-stock">
+                        Stock: {{ producto.stock }}
+                    </span>
+
+                    <span class="producto-categoria">
+                        Cat. {{ producto.categoria_id }}
+                    </span>
+
+                </div>
+
+
+                <div class="producto-unidad">
+
+                    Unidad:
+                    {{ producto.unidad_medida }}
+
+                </div>
+
+
+                <!-- ACCIONES SOLO ADMIN -->
+                {% if session.get('rol') == 'admin' %}
+
+                <div class="producto-acciones">
+
+                    <a
+                        href="{{ url_for(
+                            'productos.editar_producto',
+                            id=producto.id
+                        ) }}"
+                        class="btn btn-warning btn-sm btn-block">
+
+                        Editar
+
+                    </a>
+
+
+                    <form
+                        action="{{ url_for(
+                            'productos.eliminar_producto',
+                            id=producto.id
+                        ) }}"
+                        method="POST"
+                        style="width: 50%;"
+                    >
+
+                        <button
+                            type="submit"
+                            class="btn btn-danger btn-sm btn-block"
+                            onclick="return confirm(
+                                '¿Eliminar este producto?'
+                            );"
+                        >
+
+                            Eliminar
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="sin-productos">
+
+            <h4>
+                No hay productos registrados.
+            </h4>
+
+            <p>
+                Actualmente no hay productos para mostrar.
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+<!-- BUSCADOR -->
+<script>
+
+    const buscador = document.getElementById('buscador');
+
+    buscador.addEventListener('input', function () {
+
+        const texto = this.value.toLowerCase().trim();
+
+        const productos =
+            document.querySelectorAll('.producto-card');
+
+        productos.forEach(function (producto) {
+
+            const nombre =
+                producto.dataset.nombre;
+
+            const codigo =
+                producto.dataset.codigo;
+
+            if (
+                nombre.includes(texto) ||
+                codigo.includes(texto)
+            ) {
+
+                producto.style.display = '';
+
+            } else {
+
+                producto.style.display = 'none';
+
+            }
+
+        });
+
+    });
+
+</script>
+
+
+{% endblock fact %}

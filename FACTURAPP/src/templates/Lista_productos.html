@@ -1,0 +1,138 @@
+{% extends 'layout.html' %}
+
+{% block fact %}
+
+<div class="container mt-4">
+
+    <h3>Lista de Productos</h3>
+
+    <p>
+        Total productos:
+        {{ meta.get('total', productos|length) }}
+    </p>
+
+    <table class="table table-bordered">
+
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Unidad</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for producto in productos %}
+
+            <tr>
+                <td>{{ producto.id }}</td>
+                <td>{{ producto.codigo }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.descripcion }}</td>
+                <td>{{ producto.unidad_medida }}</td>
+                <td>{{ producto.precio }}</td>
+                <td>{{ producto.stock }}</td>
+                <td>{{ producto.categoria_id }}</td>
+
+                <td>
+
+                    {% if session.get('rol') == 'admin' %}
+
+                    <a href="{{ url_for(
+                        'productos.editar_producto',
+                        id=producto.id
+                    ) }}"
+                    class="btn btn-warning btn-sm">
+                        Editar
+                    </a>
+
+                    <form action="{{ url_for(
+                        'productos.eliminar_producto',
+                        id=producto.id
+                    ) }}"
+                    method="POST"
+                    style="display:inline;">
+
+                        <button type="submit"
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm(
+                                '¿Eliminar este producto?'
+                                );">
+                            Eliminar
+                        </button>
+
+                    </form>
+
+                    {% endif %}
+
+                </td>
+            </tr>
+
+            {% else %}
+
+            <tr>
+                <td colspan="9" class="text-center">
+                    No hay productos registrados.
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+    <nav>
+
+        <ul class="pagination">
+
+            {% if meta.get('has_prev') %}
+
+            <li class="page-item">
+                <a class="page-link"
+                   href="{{ url_for(
+                   'productos.index',
+                   page=meta.get('page') - 1,
+                   per_page=meta.get('per_page', 5)
+                   ) }}">
+                    Anterior
+                </a>
+            </li>
+
+            {% endif %}
+
+            <li class="page-item active">
+                <span class="page-link">
+                    Página {{ meta.get('page', 1) }}
+                    de {{ meta.get('total_pages', 1) }}
+                </span>
+            </li>
+
+            {% if meta.get('has_next') %}
+
+            <li class="page-item">
+                <a class="page-link"
+                   href="{{ url_for(
+                   'productos.index',
+                   page=meta.get('page') + 1,
+                   per_page=meta.get('per_page', 5)
+                   ) }}">
+                    Siguiente
+                </a>
+            </li>
+
+            {% endif %}
+
+        </ul>
+
+    </nav>
+
+</div>
+
+{% endblock fact %}

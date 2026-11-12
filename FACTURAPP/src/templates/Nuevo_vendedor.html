@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block fact %}
+
+<h3>Añadir nuevo Vendedor</h3>
+
+<form method="POST">
+
+    <div class="form-group col-md-6">
+
+        <label>Nombre del vendedor</label>
+        <input 
+            type="text"
+            class="form-control"
+            name="nombre"
+            placeholder="Nombre completo">
+
+
+        <label>Cédula</label>
+        <input 
+            type="text"
+            class="form-control"
+            name="cedula"
+            placeholder="Número de documento">
+
+
+        <label>Teléfono</label>
+        <input 
+            type="text"
+            class="form-control"
+            name="telefono"
+            placeholder="Número de teléfono">
+
+
+        <label>Dirección</label>
+        <input 
+            type="text"
+            class="form-control"
+            name="direccion"
+            placeholder="Dirección">
+
+
+        <label>Email</label>
+        <input 
+            type="email"
+            class="form-control"
+            name="email"
+            placeholder="Correo electrónico">
+
+
+        <br>
+
+        <button type="submit" class="btn btn-primary">
+            Guardar
+        </button>
+
+    </div>
+
+</form>
+
+{% endblock fact %}
+
+    

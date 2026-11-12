@@ -1,0 +1,127 @@
+{% extends 'layout.html' %}
+
+{% block fact %}
+<div class="container mt-4">
+    <h3>Nuevo Detalle de Factura</h3>
+
+    <form method="POST">
+        <div class="form-group">
+            <label>Factura</label>
+            <select name="factura_id"
+                    class="form-control"
+                    required>
+                <option value="">
+                    Seleccione una factura
+                </option>
+
+                {% for f in facturas %}
+                <option value="{{ f.id }}"
+                    {% if factura and factura.id == f.id %}
+                    selected
+                    {% endif %}>
+                    {{ f.numero_factura }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        {% if factura %}
+        <div class="alert alert-info">
+            <strong>Cliente:</strong>
+            {{ factura.cliente_id }}<br>
+            <strong>Vendedor:</strong>
+            {{ factura.vendedor_id }}<br>
+            <strong>Fecha:</strong>
+            {{ factura.fecha_emision }}
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label>Producto</label>
+            <select name="producto_id"
+                    class="form-control"
+                    required>
+                <option value="">
+                    Seleccione un producto
+                </option>
+
+                {% for p in productos %}
+                <option value="{{ p.id }}"
+                    {% if producto and producto.id == p.id %}
+                    selected
+                    {% endif %}>
+                    {{ p.nombre }} -
+                    $ {{ p.precio }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Cantidad</label>
+            <input type="number"
+                   name="cantidad"
+                   min="1"
+                   value="{{ cantidad }}"
+                   class="form-control"
+                   required>
+        </div>
+
+        <button type="submit"
+                name="accion"
+                value="consultar"
+                class="btn btn-info">
+            Consultar
+        </button>
+
+        {% if producto %}
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Producto seleccionado</label>
+                    <input type="text"
+                           class="form-control"
+                           value="{{ producto.nombre }}"
+                           readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Precio Unitario</label>
+                    <input type="text"
+                           class="form-control"
+                           value="$ {{ precio }}"
+                           readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Total</label>
+                    <input type="text"
+                           class="form-control"
+                           value="$ {{ total }}"
+                           readonly>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit"
+                name="accion"
+                value="guardar"
+                class="btn btn-success">
+            Guardar Detalle
+        </button>
+        {% endif %}
+
+        <a href="{{ url_for(
+            'detalles_facturas.index'
+        ) }}" class="btn btn-secondary">
+            Cancelar
+        </a>
+    </form>
+</div>
+{% endblock fact %}

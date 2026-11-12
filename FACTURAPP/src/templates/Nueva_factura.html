@@ -1,0 +1,100 @@
+{% extends 'layout.html' %}
+{% block fact %}
+<h3>Nueva Factura</h3>
+
+<form method="GET" class="mb-4">
+    <div class="form-row align-items-end">
+        <div class="col-md-4">
+            <label>Buscar por cédula</label>
+            <input type="text"
+                   name="cedula"
+                   value="{{ cedula }}"
+                   class="form-control"
+                   placeholder="Ingrese la cédula">
+        </div>
+        <div class="col-md-2">
+            <button type="submit"
+                    class="btn btn-info btn-block">
+                Buscar
+            </button>
+        </div>
+    </div>
+</form>
+
+{% if cliente %}
+<div class="alert alert-success">
+    Cliente encontrado:
+    <strong>{{ cliente.nombre }}</strong>
+    ({{ cliente.cedula }})
+</div>
+
+<form method="POST">
+    <input type="hidden"
+           name="cliente_id"
+           value="{{ cliente.id }}">
+
+    <div class="form-group">
+        <label>Número de Factura</label>
+        <input type="text"
+               name="numero_factura"
+               class="form-control"
+               required>
+    </div>
+
+    <div class="form-group">
+        <label>Producto</label>
+        <select name="producto_id"
+                class="form-control"
+                required>
+            <option value="">
+                Seleccione un producto
+            </option>
+            {% for producto in productos %}
+            <option value="{{ producto.id }}">
+                {{ producto.nombre }} - ${{ producto.precio }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Cantidad</label>
+        <input type="number"
+               name="cantidad"
+               min="1"
+               value="1"
+               class="form-control"
+               required>
+    </div>
+
+    <div class="form-group">
+        <label>Vendedor</label>
+        <select name="vendedor_id"
+                class="form-control"
+                required>
+            <option value="">
+                Seleccione un vendedor
+            </option>
+            {% for vendedor in vendedores %}
+            <option value="{{ vendedor.id }}">
+                {{ vendedor.nombre }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Fecha</label>
+        <input type="date"
+               name="fecha_emision"
+               class="form-control"
+               required>
+    </div>
+
+    <button type="submit"
+            class="btn btn-success">
+        Guardar Factura
+    </button>
+</form>
+{% endif %}
+{% endblock fact %}

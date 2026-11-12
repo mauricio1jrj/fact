@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% block fact %}
+
+<h3>Editar Factura</h3>
+
+<form method="POST">
+
+
+<div class="form-group">
+    <label>Cliente</label>
+
+    <select name="cliente_id"
+            class="form-control"
+            required>
+
+        {% for cliente in clientes %}
+
+        <option value="{{ cliente.id }}"
+            {% if cliente.id == factura.cliente_id %}selected{% endif %}>
+
+            {{ cliente.nombre }}
+
+        </option>
+
+        {% endfor %}
+
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Vendedor</label>
+
+    <select name="vendedor_id"
+            class="form-control"
+            required>
+
+        {% for vendedor in vendedores %}
+
+        <option value="{{ vendedor.id }}"
+            {% if vendedor.id == factura.vendedor_id %}selected{% endif %}>
+
+            {{ vendedor.nombre }}
+
+        </option>
+
+        {% endfor %}
+
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Fecha</label>
+
+    <input type="date"
+           name="fecha_emision"
+           value="{{ factura.fecha_emision }}"
+           class="form-control"
+           required>
+</div>
+
+<div class="form-group">
+    <label>Total</label>
+
+    <input type="number"
+           step="0.01"
+           name="total"
+           value="{{ factura.total }}"
+           class="form-control"
+           required>
+</div>
+
+<button type="submit"
+        class="btn btn-warning">
+    Actualizar
+</button>
+
+<a href="{{ url_for('facturas.index') }}"
+   class="btn btn-secondary">
+    Cancelar
+</a>
+
+
+</form>
+
+{% endblock fact %}

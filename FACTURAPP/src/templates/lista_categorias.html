@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block fact %}
+
+<h3>Lista de Categorías</h3>
+
+<a href="{{ url_for('categorias.crear_categoria') }}"
+   class="btn btn-primary mb-3">
+    Nueva Categoría
+</a>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for categoria in categorias %}
+        <tr>
+            <td>{{ categoria.id }}</td>
+            <td>{{ categoria.nombre }}</td>
+            <td>{{ categoria.descripcion }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock fact %}

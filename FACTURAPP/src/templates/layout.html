@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon"
+          type="image/png"
+          href="{{ url_for('static', filename='img/ver.png') }}">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <a class="navbar-brand d-flex align-items-center"
+           href="{{ url_for('index.index') }}">
+
+            <img src="{{ url_for('static', filename='img/ver.png') }}"
+                 alt="Logo FacturAPP"
+                 width="100"
+                 height="60"
+                 class="mr-2">
+
+        </a>
+
+
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav mr-auto">
+
+                <!-- HOME -->
+
+                <li class="nav-item active">
+
+                    <a class="nav-link"
+                       href="{{ url_for('index.index') }}">
+
+                        Home
+
+                        <span class="sr-only">(current)</span>
+
+                    </a>
+
+                </li>
+
+
+
+                {% if session.get('rol') == 'admin' %}
+
+
+                    <!-- FACTURAS -->
+
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="facturasDropdown"
+                           role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+
+                            Facturas
+
+                        </a>
+
+                        <div class="dropdown-menu"
+                             aria-labelledby="facturasDropdown">
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('facturas.crear_factura') }}">
+
+                                Nueva Factura
+
+                            </a>
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('facturas.index') }}">
+
+                                Ver Facturas
+
+                            </a>
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('facturas.index') }}">
+
+                                Eliminar Facturas
+
+                            </a>
+                            <a class="dropdown-item"
+                            href="{{ url_for('detalles_facturas.index') }}">
+                                Detalles de Facturas
+                            </a>
+
+                        </div>
+
+                    </li>
+
+
+                    <!-- CLIENTES -->
+
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="clientesDropdown"
+                           role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+
+                            Clientes
+
+                        </a>
+
+                        <div class="dropdown-menu"
+                             aria-labelledby="clientesDropdown">
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('clientes.crear_cliente') }}">
+
+                                Nuevo Cliente
+
+                            </a>
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('clientes.index') }}">
+
+                                Ver Clientes
+
+                            </a>
+
+                        </div>
+
+                    </li>
+
+
+                    <!-- PRODUCTOS -->
+
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="productosDropdown"
+                           role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+
+                            Productos
+
+                        </a>
+
+                        <div class="dropdown-menu"
+                             aria-labelledby="productosDropdown">
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('productos.crear_producto') }}">
+
+                                Nuevo producto
+
+                            </a>
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('productos.index') }}">
+
+                                Ver productos
+
+                            </a>
+
+                        </div>
+
+                    </li>
+
+
+                    <!-- VENDEDORES -->
+
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="vendedoresDropdown"
+                           role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+
+                            Vendedores
+
+                        </a>
+
+                        <div class="dropdown-menu"
+                             aria-labelledby="vendedoresDropdown">
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('vendedores.crear_vendedor') }}">
+
+                                Nuevo vendedor
+
+                            </a>
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('vendedores.index') }}">
+
+                                Ver vendedores
+
+                            </a>
+
+                        </div>
+
+                    </li>
+
+
+              
+
+                {% elif session.get('rol') == 'vendedor' %}
+
+
+                    <!-- FACTURAS -->
+
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="facturasVendedorDropdown"
+                           role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+
+                            Facturas
+
+                        </a>
+
+                        <div class="dropdown-menu"
+                             aria-labelledby="facturasVendedorDropdown">
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('facturas.crear_factura') }}">
+
+                                Nueva Factura
+
+                            </a>
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('facturas.index') }}">
+
+                                Ver Facturas
+
+                            </a>
+                            <a class="dropdown-item"
+                                href="{{ url_for('detalles_facturas.index') }}">
+                                Detalles de Facturas
+                            </a>
+
+                        </div>
+
+                    </li>
+
+
+                    <!-- CLIENTES -->
+
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="clientesVendedorDropdown"
+                           role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+
+                            Clientes
+
+                        </a>
+
+                        <div class="dropdown-menu"
+                             aria-labelledby="clientesVendedorDropdown">
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('clientes.crear_cliente') }}">
+
+                                Nuevo Cliente
+
+                            </a>
+
+                            <a class="dropdown-item"
+                               href="{{ url_for('clientes.index') }}">
+
+                                Ver Clientes
+
+                            </a>
+
+                        </div>
+
+                    </li>
+
+
+                {% endif %}
+
+
+            </ul>
+
+
+            <!-- me muestra quien es el usuario que esta logueado -->
+
+            {% if session.get('usuario') %}
+
+                <span class="navbar-text mr-3">
+
+                    {{ session['usuario']['nombre'] }}
+
+                    ({{ session.get('rol') }})
+
+                </span>
+
+
+                <a class="btn btn-outline-danger"
+                   href="{{ url_for('auth.logout') }}">
+
+                    Cerrar sesión
+
+                </a>
+
+            {% endif %}
+
+
+        </div>
+
+    </nav>
+
+
+    {% block fact %}
+    {% endblock %}
+
+</body>
+
+</html>
